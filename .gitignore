@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+_extracted
+_extract.js
+_extract_assets.js
+_template.html
+_verify
