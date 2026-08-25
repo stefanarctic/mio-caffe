@@ -1,22 +1,26 @@
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { NAV_LINKS } from './data'
 
-export default function Nav({ active, onNavigate }) {
+export default function Nav({ active }) {
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
   const navOn = '#F4E9D6'
   const navOff = 'rgba(244,233,214,0.7)'
 
-  const go = (id) => {
+  const close = (to) => {
     setOpen(false)
-    onNavigate?.(id)
+    if (to && pathname === to.split('#')[0] && !to.includes('#')) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   return (
     <nav className="nav">
       <div className="nav-inner">
-        <a href="#acasa" className="logo" onClick={() => go('acasa')}>
+        <Link to="/" className="logo" onClick={() => close('/')}>
           mio<span>.</span>
-        </a>
+        </Link>
         <button
           className={`nav-toggle${open ? ' open' : ''}`}
           aria-label={open ? 'Închide meniul' : 'Deschide meniul'}
@@ -28,19 +32,19 @@ export default function Nav({ active, onNavigate }) {
         </button>
         <div className={`nav-links${open ? ' open' : ''}`}>
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.id}
-              href={`#${link.id}`}
+              to={link.to}
               className="nav-link"
               style={{ color: active === link.id ? navOn : navOff }}
-              onClick={() => go(link.id)}
+              onClick={() => close(link.to)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a href="#contact" className="nav-cta" onClick={() => go('contact')}>
+          <Link to="/#contact" className="nav-cta" onClick={() => close('/#contact')}>
             Contact
-          </a>
+          </Link>
         </div>
       </div>
     </nav>

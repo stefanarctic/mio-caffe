@@ -8,11 +8,18 @@ function chipStyle(on) {
   }
 }
 
-export default function Menu({ active, onFilter, onItemClick }) {
+export default function Menu({ active, onFilter, onItemClick, standalone = false }) {
   const visible = active === 'toate' ? MENU : MENU.filter((c) => c.key === active)
 
   return (
-    <section id="meniu" style={{ maxWidth: 1180, margin: '0 auto', padding: '80px 32px 20px' }}>
+    <section
+      id="meniu"
+      style={{
+        maxWidth: 1180,
+        margin: '0 auto',
+        padding: standalone ? '48px 32px 96px' : '80px 32px 20px',
+      }}
+    >
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
         <span style={{ color: '#C89452', fontSize: 22 }}>❦</span>
         <span

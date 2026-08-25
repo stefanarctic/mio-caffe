@@ -52,7 +52,7 @@ export function useActiveSection(ids, offset = 76) {
   return active
 }
 
-export function useReveal() {
+export function useReveal(dep) {
   useEffect(() => {
     const reveals = Array.from(document.querySelectorAll('[data-reveal]'))
     const show = (el) => el.classList.add('is-visible')
@@ -86,5 +86,5 @@ export function useReveal() {
       observer.disconnect()
       clearTimeout(safety)
     }
-  }, [])
+  }, [dep])
 }

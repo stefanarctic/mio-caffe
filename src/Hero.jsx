@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import ouaTurcesti from './assets/oua-turcesti.jpg'
 import pancakes from './assets/pancakes.jpg'
 
@@ -91,12 +92,12 @@ export default function Hero({ openLabel, openDotColor, openDotHalo }) {
             caldă și relaxantă — chiar lângă râul Olănești.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
-            <a href="#meniu" className="btn-solid">
+            <Link to="/meniu" className="btn-solid">
               Vezi meniul
-            </a>
-            <a href="#contact" className="btn-outline">
+            </Link>
+            <Link to="/#contact" className="btn-outline">
               Găsește-ne
-            </a>
+            </Link>
           </div>
         </div>
         <div

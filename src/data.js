@@ -4,6 +4,7 @@ import avocadoToast from './assets/avocado-toast.jpg'
 import scrambledEggs from './assets/scrambled-eggs.jpg'
 import menuDrinks from './assets/menu-drinks.jpg'
 import menuBrunch from './assets/menu-brunch.jpg'
+import cappuccino from './assets/cappuccino.jpg'
 
 export const PHOTOS = [
   { src: ouaTurcesti, caption: 'Ouă Turcești' },
@@ -153,8 +154,35 @@ export const REVIEWS = [
 ]
 
 export const NAV_LINKS = [
-  { id: 'acasa', label: 'Acasă' },
-  { id: 'meniu', label: 'Meniu' },
-  { id: 'despre', label: 'Despre' },
-  { id: 'galerie', label: 'Galerie' },
+  { id: 'acasa', label: 'Acasă', to: '/' },
+  { id: 'meniu', label: 'Meniu', to: '/meniu' },
+  { id: 'despre', label: 'Despre', to: '/#despre' },
+  { id: 'galerie', label: 'Galerie', to: '/#galerie' },
+]
+
+export const FEATURED = [
+  {
+    name: 'Cappuccino',
+    category: 'Caffè',
+    vol: '200 ml',
+    price: '18 lei',
+    desc: 'espresso, lapte texturat, artă latte',
+    src: cappuccino,
+  },
+  {
+    name: 'Ouă Turcești',
+    category: 'Brunch',
+    price: '37 lei',
+    tag: 'SIGNATURE',
+    desc: 'iaurt grecesc, unt topit, lămâie, boia afumată, focaccia caldă',
+    src: ouaTurcesti,
+  },
+  {
+    name: 'Pancakes',
+    category: 'Sweets',
+    price: '29 lei',
+    tag: 'FAVORIT',
+    desc: 'pufoși, fructe de sezon, sirop de arțar, unt',
+    src: pancakes,
+  },
 ]

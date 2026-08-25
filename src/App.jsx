@@ -1,69 +1,67 @@
-import { useEffect, useState } from 'react'
-import About from './About'
-import Contact from './Contact'
+import { useEffect } from 'react'
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './Footer'
-import Gallery from './Gallery'
-import Hero from './Hero'
-import Lightbox from './Lightbox'
-import Menu from './Menu'
-import MenuPopup from './MenuPopup'
+import HomePage from './HomePage'
+import MenuPage from './MenuPage'
 import Nav from './Nav'
-import Pillars from './Pillars'
-import Reviews from './Reviews'
-import { PHOTOS } from './data'
-import { useActiveSection, useOpenStatus, useReveal } from './hooks'
+import { useActiveSection, useReveal } from './hooks'
 
-const SECTION_IDS = ['acasa', 'meniu', 'despre', 'galerie', 'contact']
+const SECTION_IDS = ['acasa', 'despre', 'galerie', 'contact']
 
-export default function App() {
-  const [filter, setFilter] = useState('toate')
-  const [menuItem, setMenuItem] = useState(null)
-  const [lbIdx, setLbIdx] = useState(null)
-  const navActive = useActiveSection(SECTION_IDS)
-  const open = useOpenStatus()
-  useReveal()
+function ScrollManager() {
+  const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape' && menuItem) {
-        setMenuItem(null)
+    if (!hash) {
+      window.scrollTo(0, 0)
+      return undefined
+    }
+
+    const id = decodeURIComponent(hash.slice(1))
+    let tries = 0
+    let frame = 0
+
+    const tick = () => {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
         return
       }
-      if (lbIdx == null) return
-      const n = PHOTOS.length
-      if (e.key === 'Escape') setLbIdx(null)
-      if (e.key === 'ArrowRight') setLbIdx((i) => (i + 1) % n)
-      if (e.key === 'ArrowLeft') setLbIdx((i) => (i - 1 + n) % n)
+      if (tries++ < 30) frame = requestAnimationFrame(tick)
     }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [menuItem, lbIdx])
 
-  useEffect(() => {
-    document.body.style.overflow = menuItem || lbIdx != null ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [menuItem, lbIdx])
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [pathname, hash])
+
+  return null
+}
+
+function Layout() {
+  const { pathname } = useLocation()
+  const sectionActive = useActiveSection(SECTION_IDS)
+  const active = pathname === '/meniu' ? 'meniu' : sectionActive
+  useReveal(pathname)
 
   return (
     <div className="page">
-      <Nav active={navActive} />
-      <Hero openLabel={open.openLabel} openDotColor={open.openDotColor} openDotHalo={open.openDotHalo} />
-      <Pillars />
-      <Menu active={filter} onFilter={setFilter} onItemClick={setMenuItem} />
-      <About />
-      <Reviews />
-      <Gallery onOpen={setLbIdx} />
-      <Contact openLabel={open.openLabel} openDotColor={open.openDotColor} openDotHalo={open.openDotHalo} />
+      <Nav active={active} />
+      <Outlet />
       <Footer />
-      <MenuPopup item={menuItem} onClose={() => setMenuItem(null)} />
-      <Lightbox
-        index={lbIdx}
-        onClose={() => setLbIdx(null)}
-        onPrev={() => setLbIdx((i) => (i - 1 + PHOTOS.length) % PHOTOS.length)}
-        onNext={() => setLbIdx((i) => (i + 1) % PHOTOS.length)}
-      />
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <>
+      <ScrollManager />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/meniu" element={<MenuPage />} />
+        </Route>
+      </Routes>
+    </>
   )
 }

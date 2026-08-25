@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Footer() {
   return (
     <footer style={{ background: '#2B1B12', color: '#F4E9D6', padding: '72px 32px 40px' }}>
@@ -61,21 +63,21 @@ export default function Footer() {
                 fontSize: 16,
               }}
             >
-              <a href="#acasa" className="footer-link">
+              <Link to="/" className="footer-link">
                 Acasă
-              </a>
-              <a href="#meniu" className="footer-link">
+              </Link>
+              <Link to="/meniu" className="footer-link">
                 Meniu
-              </a>
-              <a href="#despre" className="footer-link">
+              </Link>
+              <Link to="/#despre" className="footer-link">
                 Despre noi
-              </a>
-              <a href="#galerie" className="footer-link">
+              </Link>
+              <Link to="/#galerie" className="footer-link">
                 Galerie
-              </a>
-              <a href="#contact" className="footer-link">
+              </Link>
+              <Link to="/#contact" className="footer-link">
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
           <div>
