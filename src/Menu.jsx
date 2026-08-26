@@ -1,4 +1,4 @@
-import { FILTERS, MENU } from './data'
+import { ALLERGENS, FILTERS, MENU } from './data'
 
 function chipStyle(on) {
   return {
@@ -9,7 +9,7 @@ function chipStyle(on) {
 }
 
 export default function Menu({ active, onFilter, onItemClick, standalone = false }) {
-  const visible = active === 'toate' ? MENU : MENU.filter((c) => c.key === active)
+  const visible = active === 'toate' ? MENU : MENU.filter((c) => c.group === active)
 
   return (
     <section
@@ -56,8 +56,8 @@ export default function Menu({ active, onFilter, onItemClick, standalone = false
           margin: '0 0 32px',
         }}
       >
-        Preparate proaspete, cafea de specialitate și deserturi făcute cu drag. Prețuri între 20 și 40 lei
-        de persoană.
+        Preparate proaspete, cafea de specialitate, panini și pancakes. Comanda și plata se fac la bar.
+        Brunch & sweets: 7:30 – 16:30.
       </p>
 
       <div data-reveal="28" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 44 }}>
@@ -95,14 +95,13 @@ export default function Menu({ active, onFilter, onItemClick, standalone = false
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {cat.items.map((item) => (
-                <div key={item.name} className="menu-item" onClick={() => onItemClick(item)}>
+                <div key={`${item.name}-${item.vol || item.price}`} className="menu-item" onClick={() => onItemClick(item)}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
                     <span
                       style={{
                         fontFamily: "'Bitter', serif",
                         fontWeight: 700,
                         fontSize: 'clamp(17px,2vw,21px)',
-                        whiteSpace: 'nowrap',
                       }}
                     >
                       {item.name}
@@ -149,7 +148,7 @@ export default function Menu({ active, onFilter, onItemClick, standalone = false
                         fontWeight: 800,
                         fontSize: 'clamp(16px,1.8vw,19px)',
                         color: '#A9772F',
-                        width: 64,
+                        minWidth: 88,
                         textAlign: 'right',
                         whiteSpace: 'nowrap',
                       }}
@@ -201,27 +200,17 @@ export default function Menu({ active, onFilter, onItemClick, standalone = false
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: 22,
+              gap: 14,
               fontFamily: "'Spectral', serif",
               fontSize: 15,
               color: '#4A3121',
             }}
           >
-            <span>
-              <strong style={{ color: '#2C6B66' }}>V</strong> — Vegetarian
-            </span>
-            <span>
-              <strong style={{ color: '#2C6B66' }}>VG</strong> — Vegan
-            </span>
-            <span>
-              <strong style={{ color: '#A9772F' }}>G</strong> — Conține gluten
-            </span>
-            <span>
-              <strong style={{ color: '#A9772F' }}>L</strong> — Conține lactoză
-            </span>
-            <span>
-              <strong style={{ color: '#A9772F' }}>N</strong> — Conține nuci
-            </span>
+            {ALLERGENS.map((a) => (
+              <span key={a.n}>
+                <strong style={{ color: '#A9772F' }}>{a.n}.</strong> {a.label}
+              </span>
+            ))}
           </div>
           <p
             style={{
@@ -232,8 +221,9 @@ export default function Menu({ active, onFilter, onItemClick, standalone = false
               lineHeight: 1.5,
             }}
           >
-            Pentru intoleranțe sau alergii, întreabă personalul — te ajutăm cu drag să alegi. Meniul poate
-            varia în funcție de sezon.
+            Lapte vegan +2 lei · Decaf +3 lei. Comanda și plata se fac la bar. Pentru intoleranțe sau
+            alergii, întreabă personalul — te ajutăm cu drag să alegi. Meniul poate varia în funcție de
+            sezon.
           </p>
         </div>
       </div>

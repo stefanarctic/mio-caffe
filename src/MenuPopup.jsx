@@ -2,7 +2,13 @@ import { PHOTOS } from './data'
 
 export default function MenuPopup({ item, onClose }) {
   if (!item) return null
-  const img = PHOTOS.find((im) => im.caption.toLowerCase() === item.name.toLowerCase())
+  const galleryOnly = new Set(['Băuturi de specialitate', 'Masa de brunch'])
+  const img = PHOTOS.find((im) => {
+    if (galleryOnly.has(im.caption)) return false
+    const cap = im.caption.toLowerCase()
+    const name = item.name.toLowerCase()
+    return name === cap || name.includes(cap)
+  })
 
   return (
     <div

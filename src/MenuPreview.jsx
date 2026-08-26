@@ -40,8 +40,7 @@ export default function MenuPreview() {
           margin: '0 0 36px',
         }}
       >
-        Preparate proaspete, cafea de specialitate și deserturi făcute cu drag. Prețuri între 20 și 40 lei
-        de persoană.
+        Preparate proaspete, cafea de specialitate, panini și pancakes. Comanda și plata se fac la bar.
       </p>
 
       <div className="menu-preview-grid" data-reveal="28">
