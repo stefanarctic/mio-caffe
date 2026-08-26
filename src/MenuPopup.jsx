@@ -1,4 +1,4 @@
-import { PHOTOS } from './data'
+import { ALLERGENS, PHOTOS } from './data'
 
 export default function MenuPopup({ item, onClose }) {
   if (!item) return null
@@ -9,6 +9,9 @@ export default function MenuPopup({ item, onClose }) {
     const name = item.name.toLowerCase()
     return name === cap || name.includes(cap)
   })
+  const allergenLabels = (item.allergens ?? [])
+    .map((n) => ALLERGENS.find((a) => a.n === n))
+    .filter(Boolean)
 
   return (
     <div
@@ -77,6 +80,15 @@ export default function MenuPopup({ item, onClose }) {
             }}
           >
             {item.name}
+            {item.frozen ? (
+              <span
+                aria-label="produs congelat"
+                title="Produs congelat"
+                style={{ color: '#A9772F', marginLeft: 6, fontWeight: 700 }}
+              >
+                ★
+              </span>
+            ) : null}
           </h3>
           {item.desc ? (
             <p
@@ -85,10 +97,36 @@ export default function MenuPopup({ item, onClose }) {
                 fontSize: 16,
                 lineHeight: 1.55,
                 color: '#6B4A32',
-                margin: '0 0 20px',
+                margin: item.frozen || allergenLabels.length ? '0 0 10px' : '0 0 20px',
               }}
             >
               {item.desc}
+            </p>
+          ) : null}
+          {item.frozen ? (
+            <p
+              style={{
+                fontFamily: "'Spectral', serif",
+                fontSize: 14,
+                color: '#6B4A32',
+                margin: allergenLabels.length ? '0 0 8px' : '0 0 20px',
+              }}
+            >
+              <strong style={{ color: '#A9772F' }}>★</strong> Produs congelat.
+            </p>
+          ) : null}
+          {allergenLabels.length ? (
+            <p
+              style={{
+                fontFamily: "'Spectral', serif",
+                fontSize: 14,
+                color: '#6B4A32',
+                margin: '0 0 20px',
+                lineHeight: 1.5,
+              }}
+            >
+              <strong style={{ color: '#A9772F' }}>Alergeni:</strong>{' '}
+              {allergenLabels.map((a) => `${a.n}. ${a.label}`).join(' · ')}
             </p>
           ) : null}
           <div
