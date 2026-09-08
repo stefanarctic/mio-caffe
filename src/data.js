@@ -331,6 +331,47 @@ export const NAV_LINKS = [
   { id: 'galerie', label: 'Galerie', to: '/#galerie' },
 ]
 
+export function menuItemKey(categoryKey, item) {
+  const raw = `${categoryKey}__${item.name}__${item.vol || ''}`
+  return raw
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase()
+}
+
+export function flattenMenuItems() {
+  const rows = []
+  for (const cat of MENU) {
+    const sections = cat.sections ?? [{ items: cat.items }]
+    for (const sec of sections) {
+      for (const item of sec.items) {
+        rows.push({
+          key: menuItemKey(cat.key, item),
+          categoryKey: cat.key,
+          categoryName: cat.name,
+          sectionName: sec.name || '',
+          item,
+        })
+      }
+    }
+  }
+  return rows
+}
+
+export function matchMenuPhoto(item, photos) {
+  const galleryOnly = new Set(['Băuturi de specialitate', 'Masa de brunch'])
+  return (
+    photos.find((im) => {
+      if (galleryOnly.has(im.caption)) return false
+      const cap = im.caption.toLowerCase()
+      const name = item.name.toLowerCase()
+      return name === cap || name.includes(cap)
+    }) || null
+  )
+}
+
 export const FEATURED = [
   {
     name: 'Cappuccino',

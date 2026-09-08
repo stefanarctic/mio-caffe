@@ -1,8 +1,6 @@
-import { PHOTOS } from './data'
-
-export default function Lightbox({ index, onClose, onPrev, onNext }) {
+export default function Lightbox({ index, photos = [], onClose, onPrev, onNext }) {
   if (index == null) return null
-  const photo = PHOTOS[index]
+  const photo = photos[index]
   if (!photo) return null
 
   return (

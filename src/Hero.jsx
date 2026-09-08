@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import ouaTurcesti from './assets/oua-turcesti.jpg'
-import pancakes from './assets/pancakes.jpg'
+import { useSiteContent } from './content'
 
 export default function Hero({ openLabel, openDotColor, openDotHalo }) {
+  const { hero } = useSiteContent()
   return (
     <section id="acasa">
       <header
@@ -120,8 +120,8 @@ export default function Hero({ openLabel, openDotColor, openDotHalo }) {
             }}
           >
             <img
-              src={ouaTurcesti}
-              alt="Ouă turcești"
+              src={hero.primary.url}
+              alt={hero.primary.alt}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           </div>
@@ -139,8 +139,8 @@ export default function Hero({ openLabel, openDotColor, openDotHalo }) {
             }}
           >
             <img
-              src={pancakes}
-              alt="Pancakes"
+              src={hero.secondary.url}
+              alt={hero.secondary.alt}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           </div>

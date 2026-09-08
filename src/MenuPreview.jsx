@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { FEATURED } from './data'
+import { useSiteContent } from './content'
 
 export default function MenuPreview() {
+  const { featured } = useSiteContent()
   return (
     <section id="meniu" style={{ maxWidth: 1180, margin: '0 auto', padding: '80px 32px 20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12 }}>
@@ -44,9 +45,9 @@ export default function MenuPreview() {
       </p>
 
       <div className="menu-preview-grid" data-reveal="28">
-        {FEATURED.map((item) => (
-          <Link key={item.name} to="/meniu" className="menu-preview-card">
-            <img src={item.src} alt={item.name} />
+        {featured.map((item) => (
+          <Link key={item.id || item.name} to="/meniu" className="menu-preview-card">
+            <img src={item.url} alt={item.name} />
             <div className="menu-preview-body">
               <div className="menu-preview-meta">
                 {item.category ? <span className="menu-preview-cat">{item.category}</span> : null}

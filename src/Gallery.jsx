@@ -1,6 +1,7 @@
-import { PHOTOS } from './data'
+import { useSiteContent } from './content'
 
 export default function Gallery({ onOpen }) {
+  const { photos } = useSiteContent()
   return (
     <section id="galerie" style={{ maxWidth: 1180, margin: '0 auto', padding: '70px 32px 40px' }}>
       <div
@@ -44,8 +45,8 @@ export default function Gallery({ onOpen }) {
         </span>
       </div>
       <div style={{ columns: '3 280px', columnGap: 18 }}>
-        {PHOTOS.map((p, i) => (
-          <div key={p.caption} className="gallery-card" data-reveal="scale" onClick={() => onOpen(i)}>
+        {photos.map((p, i) => (
+          <div key={p.id || p.caption} className="gallery-card" data-reveal="scale" onClick={() => onOpen(i)}>
             <img src={p.src} alt={p.caption} />
             <div className="gallery-shade" />
             <div className="gallery-caption">{p.caption}</div>

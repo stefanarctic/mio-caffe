@@ -1,14 +1,10 @@
-import { ALLERGENS, PHOTOS } from './data'
+import { ALLERGENS } from './data'
+import { useSiteContent } from './content'
 
 export default function MenuPopup({ item, onClose }) {
+  const { menuPhotos } = useSiteContent()
   if (!item) return null
-  const galleryOnly = new Set(['Băuturi de specialitate', 'Masa de brunch'])
-  const img = PHOTOS.find((im) => {
-    if (galleryOnly.has(im.caption)) return false
-    const cap = im.caption.toLowerCase()
-    const name = item.name.toLowerCase()
-    return name === cap || name.includes(cap)
-  })
+  const img = item.photoKey ? menuPhotos[item.photoKey] : null
   const allergenLabels = (item.allergens ?? [])
     .map((n) => ALLERGENS.find((a) => a.n === n))
     .filter(Boolean)
@@ -46,7 +42,7 @@ export default function MenuPopup({ item, onClose }) {
         </button>
         {img ? (
           <img
-            src={img.src}
+            src={img.url}
             alt={item.name}
             style={{ width: '100%', height: 210, objectFit: 'cover', display: 'block' }}
           />

@@ -1,7 +1,10 @@
 node_modules
 dist
 .DS_Store
+.env
 *.local
+.firebase
+.firebase-rules-analysis.txt
 _extracted
 _extract.js
 _extract_assets.js

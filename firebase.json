@@ -1,0 +1,19 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Mio Caffe",
+        "supportEmail": "neuroweb01@gmail.com",
+        "authorizedRedirectUris": [
+          "https://mio-caffe.firebaseapp.com",
+          "http://localhost"
+        ]
+      }
+    }
+  }
+}

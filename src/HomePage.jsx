@@ -7,11 +7,12 @@ import Lightbox from './Lightbox'
 import MenuPreview from './MenuPreview'
 import Pillars from './Pillars'
 import Reviews from './Reviews'
-import { PHOTOS } from './data'
+import { useSiteContent } from './content'
 import { useOpenStatus } from './hooks'
 
 export default function HomePage() {
   const [lbIdx, setLbIdx] = useState(null)
+  const { photos } = useSiteContent()
   const open = useOpenStatus()
 
   useEffect(() => {
@@ -21,14 +22,14 @@ export default function HomePage() {
   useEffect(() => {
     const onKey = (e) => {
       if (lbIdx == null) return
-      const n = PHOTOS.length
+      const n = photos.length
       if (e.key === 'Escape') setLbIdx(null)
       if (e.key === 'ArrowRight') setLbIdx((i) => (i + 1) % n)
       if (e.key === 'ArrowLeft') setLbIdx((i) => (i - 1 + n) % n)
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [lbIdx])
+  }, [lbIdx, photos.length])
 
   useEffect(() => {
     document.body.style.overflow = lbIdx != null ? 'hidden' : ''
@@ -49,8 +50,9 @@ export default function HomePage() {
       <Lightbox
         index={lbIdx}
         onClose={() => setLbIdx(null)}
-        onPrev={() => setLbIdx((i) => (i - 1 + PHOTOS.length) % PHOTOS.length)}
-        onNext={() => setLbIdx((i) => (i + 1) % PHOTOS.length)}
+        photos={photos}
+        onPrev={() => setLbIdx((i) => (i - 1 + photos.length) % photos.length)}
+        onNext={() => setLbIdx((i) => (i + 1) % photos.length)}
       />
     </>
   )

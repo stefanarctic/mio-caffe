@@ -1,4 +1,4 @@
-import { ALLERGENS, FILTERS, MENU } from './data'
+import { ALLERGENS, FILTERS, MENU, menuItemKey } from './data'
 
 function chipStyle(on) {
   return {
@@ -143,7 +143,7 @@ export default function Menu({ active, onFilter, onItemClick, standalone = false
                 ) : null}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                   {sec.items.map((item) => (
-                    <div key={`${item.name}-${item.vol || item.price}`} className="menu-item" onClick={() => onItemClick(item)}>
+                    <div key={`${item.name}-${item.vol || item.price}`} className="menu-item" onClick={() => onItemClick({ ...item, photoKey: menuItemKey(cat.key, item) })}>
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
                         <span
                           style={{
